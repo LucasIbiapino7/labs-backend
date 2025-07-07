@@ -5,6 +5,8 @@ import com.lab.backend.dtos.profile.ProfileUpdateDto;
 import com.lab.backend.services.ProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class ProfileController {
     }
 
     // PROTEGIDO
-    @GetMapping()
+    @GetMapping("/me")
     public ResponseEntity<ProfileMinDto> getMe(){
         ProfileMinDto response = profileService.getMe();
         return ResponseEntity.ok(response);
@@ -33,6 +35,13 @@ public class ProfileController {
     @PutMapping()
     public ResponseEntity<ProfileMinDto> update(@Valid @RequestBody ProfileUpdateDto dto){
         ProfileMinDto response = profileService.update(dto);
+        return ResponseEntity.ok(response);
+    }
+
+    // PROTEGIDO APENAS PARA O MAIOR ADMIN
+    @GetMapping()
+    public ResponseEntity<Page<ProfileMinDto>> findByName(@RequestParam(name = "nome", defaultValue = "") String nome, Pageable pageable){
+        Page<ProfileMinDto> response = profileService.findByName(nome, pageable);
         return ResponseEntity.ok(response);
     }
 }

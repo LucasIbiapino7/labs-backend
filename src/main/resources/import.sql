@@ -1,1 +1,2 @@
 INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url) VALUES ('test', 'test@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url')
+INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url) VALUES ('test2', 'test2@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url')

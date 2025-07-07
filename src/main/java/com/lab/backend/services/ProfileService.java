@@ -6,6 +6,8 @@ import com.lab.backend.model.Profile;
 import com.lab.backend.repositories.ProfileRepository;
 import com.lab.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +47,11 @@ public class ProfileService {
         profile.setLinkLattes(((dto.getLinkLattes()) != null) ? dto.getLinkLattes() : "");
         profile.setLinkLinkedin(((dto.getLinkGithub()) != null) ? dto.getLinkGithub() : "");
         profile.setLinkLinkedin(((dto.getLinkLinkedin()) != null) ? dto.getLinkLinkedin() : "");
+    }
+
+    public Page<ProfileMinDto> findByName(String nome, Pageable pageable) {
+        Profile profile = authService.getOrCreateProfile();
+        Page<Profile> profiles = profileRepository.findByName(nome, profile.getId(), pageable);
+        return profiles.map(ProfileMinDto::new);
     }
 }

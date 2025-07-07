@@ -134,4 +134,18 @@ public class Profile {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sub='" + sub + '\'' +
+                ", bio='" + bio + '\'' +
+                ", linkLattes='" + linkLattes + '\'' +
+                ", linkGithub='" + linkGithub + '\'' +
+                ", linkLinkedin='" + linkLinkedin + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
+    }
 }

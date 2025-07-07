@@ -2,6 +2,7 @@ package com.lab.backend.controllers;
 
 import com.lab.backend.dtos.lab.LaboratorioCreateDto;
 import com.lab.backend.dtos.lab.LaboratorioInfosDto;
+import com.lab.backend.dtos.lab.LaboratorioUpdateDto;
 import com.lab.backend.model.Laboratorio;
 import com.lab.backend.services.LaboratorioService;
 import jakarta.validation.Valid;
@@ -33,6 +34,12 @@ public class LaboratorioController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LaboratorioInfosDto> update(@PathVariable Long id, @RequestBody LaboratorioUpdateDto dto){
+        LaboratorioInfosDto response = laboratorioService.update(id, dto);
+        return ResponseEntity.ok(response);
     }
 
 }

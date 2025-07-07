@@ -8,10 +8,13 @@ import com.lab.backend.model.Profile;
 import com.lab.backend.model.enums.GradientAccent;
 import com.lab.backend.repositories.LaboratorioRepository;
 import com.lab.backend.repositories.ProfileLaboratorioRepository;
+import com.lab.backend.services.exceptions.DatabaseException;
 import com.lab.backend.services.exceptions.ForbiddenException;
 import com.lab.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -63,5 +66,17 @@ public class LaboratorioService {
         laboratorio.setGradientAccent(dto.getGradientAccent());
         laboratorio = laboratorioRepository.save(laboratorio);
         return new LaboratorioInfosDto(laboratorio);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id){
+        if (!laboratorioRepository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try {
+            laboratorioRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Falha de integridade referencial");
+        }
     }
 }

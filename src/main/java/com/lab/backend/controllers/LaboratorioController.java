@@ -36,10 +36,17 @@ public class LaboratorioController {
         return ResponseEntity.created(uri).body(response);
     }
 
+    // PROTEGIDO
     @PutMapping("/{id}")
     public ResponseEntity<LaboratorioInfosDto> update(@PathVariable Long id, @RequestBody LaboratorioUpdateDto dto){
         LaboratorioInfosDto response = laboratorioService.update(id, dto);
         return ResponseEntity.ok(response);
     }
 
+    // PROTEGIDO ADMIN MASTER
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        laboratorioService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

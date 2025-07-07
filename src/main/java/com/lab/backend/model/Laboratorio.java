@@ -1,5 +1,6 @@
 package com.lab.backend.model;
 
+import com.lab.backend.model.enums.GradientAccent;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -15,8 +16,9 @@ public class Laboratorio {
     private String descricaoCurta;
     @Column(name = "descricao_longa", columnDefinition = "TEXT")
     private String descricaoLonga;
-    @Column(name = "banner_gradient")
-    private String bannerGradient;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gradient_accent")
+    private GradientAccent gradientAccent;
     @Column(name = "logo_url")
     private String logoUrl;
     @OneToMany(mappedBy = "laboratorio")
@@ -31,12 +33,12 @@ public class Laboratorio {
     public Laboratorio() {
     }
 
-    public Laboratorio(Long id, String nome, String descricaoCurta, String descricaoLonga, String bannerGradient, String logoUrl) {
+    public Laboratorio(Long id, String nome, String descricaoCurta, String descricaoLonga, GradientAccent gradientAccent, String logoUrl) {
         this.id = id;
         this.nome = nome;
         this.descricaoCurta = descricaoCurta;
         this.descricaoLonga = descricaoLonga;
-        this.bannerGradient = bannerGradient;
+        this.gradientAccent = gradientAccent;
         this.logoUrl = logoUrl;
     }
 
@@ -72,12 +74,12 @@ public class Laboratorio {
         this.descricaoLonga = descricaoLonga;
     }
 
-    public String getBannerGradient() {
-        return bannerGradient;
+    public GradientAccent getGradientAccent() {
+        return gradientAccent;
     }
 
-    public void setBannerGradient(String bannerGradient) {
-        this.bannerGradient = bannerGradient;
+    public void setGradientAccent(GradientAccent gradientAccent) {
+        this.gradientAccent = gradientAccent;
     }
 
     public String getLogoUrl() {

@@ -2,8 +2,7 @@ package com.lab.backend.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_laboratorio")
@@ -26,4 +25,101 @@ public class Laboratorio {
     private List<Evento> eventos = new ArrayList<>();
     @OneToMany(mappedBy = "laboratorio")
     private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "id.laboratorio")
+    private Set<ProfileLaboratorio> profileLaboratorios = new HashSet<>();
+
+    public Laboratorio() {
+    }
+
+    public Laboratorio(Long id, String nome, String descricaoCurta, String descricaoLonga, String bannerGradient, String logoUrl) {
+        this.id = id;
+        this.nome = nome;
+        this.descricaoCurta = descricaoCurta;
+        this.descricaoLonga = descricaoLonga;
+        this.bannerGradient = bannerGradient;
+        this.logoUrl = logoUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricaoCurta() {
+        return descricaoCurta;
+    }
+
+    public void setDescricaoCurta(String descricaoCurta) {
+        this.descricaoCurta = descricaoCurta;
+    }
+
+    public String getDescricaoLonga() {
+        return descricaoLonga;
+    }
+
+    public void setDescricaoLonga(String descricaoLonga) {
+        this.descricaoLonga = descricaoLonga;
+    }
+
+    public String getBannerGradient() {
+        return bannerGradient;
+    }
+
+    public void setBannerGradient(String bannerGradient) {
+        this.bannerGradient = bannerGradient;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public List<Material> getMateriais() {
+        return materiais;
+    }
+
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public Set<ProfileLaboratorio> getProfileLaboratorios() {
+        return profileLaboratorios;
+    }
+
+    public List<Profile> getUsers(){
+        return profileLaboratorios.stream().map(x -> x.getProfile()).toList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Laboratorio that = (Laboratorio) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

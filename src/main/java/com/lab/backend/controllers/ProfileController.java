@@ -3,6 +3,7 @@ package com.lab.backend.controllers;
 import com.lab.backend.dtos.profile.ProfileMinDto;
 import com.lab.backend.dtos.profile.ProfileUpdateDto;
 import com.lab.backend.services.ProfileService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Perfis")
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {

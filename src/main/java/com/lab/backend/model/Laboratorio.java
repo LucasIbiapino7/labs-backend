@@ -2,6 +2,9 @@ package com.lab.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_laboratorio")
 public class Laboratorio {
@@ -17,4 +20,10 @@ public class Laboratorio {
     private String bannerGradient;
     @Column(name = "logo_url")
     private String logoUrl;
+    @OneToMany(mappedBy = "laboratorio")
+    private List<Material> materiais = new ArrayList<>();
+    @OneToMany(mappedBy = "laboratorio")
+    private List<Evento> eventos = new ArrayList<>();
+    @OneToMany(mappedBy = "laboratorio")
+    private List<Post> posts = new ArrayList<>();
 }

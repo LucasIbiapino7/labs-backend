@@ -15,4 +15,10 @@ public class Evento {
     private String descricao;
     private LocalDateTime instante;
     private String local;
+    @ManyToOne
+    @JoinColumn(name = "lab_id")
+    private Laboratorio laboratorio;
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 }

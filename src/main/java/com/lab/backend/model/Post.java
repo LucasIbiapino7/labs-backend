@@ -17,4 +17,10 @@ public class Post {
     private LocalDateTime intante;
     @Enumerated(EnumType.STRING)
     private Visibilidade visibilidade;
+    @ManyToOne
+    @JoinColumn(name = "lab_id")
+    private Laboratorio laboratorio;
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 }

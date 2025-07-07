@@ -2,6 +2,9 @@ package com.lab.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_profile")
 public class Profile {
@@ -21,4 +24,8 @@ public class Profile {
     private String linkLinkedin;
     @Column(name = "photo_url")
     private String photoUrl;
+    @OneToMany(mappedBy = "profile")
+    private List<Evento> eventos = new ArrayList<>();
+    @OneToMany(mappedBy = "profile")
+    private List<Post> posts = new ArrayList<>();
 }

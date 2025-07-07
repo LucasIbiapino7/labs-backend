@@ -17,4 +17,7 @@ public class Material {
     private MaterialType tipo;
     @Enumerated(EnumType.STRING)
     private Visibilidade visibilidade;
+    @ManyToOne
+    @JoinColumn(name = "lab_id")
+    private Laboratorio laboratorio;
 }

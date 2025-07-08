@@ -1,5 +1,6 @@
 package com.lab.backend.model;
 
+import com.lab.backend.model.enums.LabRole;
 import com.lab.backend.model.enums.ProfileType;
 import jakarta.persistence.*;
 
@@ -12,22 +13,26 @@ public class ProfileLaboratorio {
     private ProfileLaboratorioPK id = new ProfileLaboratorioPK();
     private Boolean ativo;
     @Enumerated(EnumType.STRING)
-    private ProfileType profileType;
+    @Column(name = "lab_role")
+    private LabRole labRole;
     private Boolean admin;
 
     public ProfileLaboratorio() {
     }
 
-    public ProfileLaboratorio(Laboratorio laboratorio, Profile profile, Boolean ativo, ProfileType profileType, Boolean admin) {
-        id.setLaboratorio(laboratorio);
-        id.setProfile(profile);
+    public ProfileLaboratorio(ProfileLaboratorioPK id, Boolean ativo, LabRole labRole, Boolean admin) {
+        this.id = id;
         this.ativo = ativo;
-        this.profileType = profileType;
+        this.labRole = labRole;
         this.admin = admin;
     }
 
     public Laboratorio getLaboratorio(){
         return id.getLaboratorio();
+    }
+
+    public void setId(ProfileLaboratorioPK id) {
+        this.id = id;
     }
 
     public void setLaboratorio(Laboratorio laboratorio){
@@ -50,20 +55,20 @@ public class ProfileLaboratorio {
         this.ativo = ativo;
     }
 
-    public ProfileType getProfileType() {
-        return profileType;
-    }
-
-    public void setProfileType(ProfileType profileType) {
-        this.profileType = profileType;
-    }
-
     public Boolean getAdmin() {
         return admin;
     }
 
     public void setAdmin(Boolean admin) {
         this.admin = admin;
+    }
+
+    public LabRole getLabRole() {
+        return labRole;
+    }
+
+    public void setLabRole(LabRole labRole) {
+        this.labRole = labRole;
     }
 
     @Override

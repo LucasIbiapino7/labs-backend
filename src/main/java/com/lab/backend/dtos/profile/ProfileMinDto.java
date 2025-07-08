@@ -1,6 +1,7 @@
 package com.lab.backend.dtos.profile;
 
 import com.lab.backend.model.Profile;
+import com.lab.backend.model.enums.ProfileType;
 
 public class ProfileMinDto {
     private Long id;
@@ -10,6 +11,7 @@ public class ProfileMinDto {
     private String linkGithub;
     private String linkLinkedin;
     private String photoUrl;
+    private ProfileType profileType;
 
     public ProfileMinDto() {
     }
@@ -22,6 +24,7 @@ public class ProfileMinDto {
         linkGithub = entity.getLinkGithub();
         linkLinkedin = entity.getLinkLinkedin();
         photoUrl = entity.getPhotoUrl();
+        profileType = entity.getProfileType();
     }
 
     public Long getId() {
@@ -78,5 +81,13 @@ public class ProfileMinDto {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public ProfileType getProfileType() {
+        return profileType;
+    }
+
+    public void setProfileType(ProfileType profileType) {
+        this.profileType = profileType;
     }
 }

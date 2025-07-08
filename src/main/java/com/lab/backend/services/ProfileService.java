@@ -27,14 +27,12 @@ public class ProfileService {
     }
 
     public ProfileMinDto getMe() {
-        // Pegar o usuário do contexto (por enquanto é um valor mockado)
         Profile profile = authService.getOrCreateProfile();
         return new ProfileMinDto(profile);
     }
 
     @Transactional
     public ProfileMinDto update(ProfileUpdateDto dto) {
-        // Pegar o usuário do contexto (por enquanto é um valor mockado)
         Profile profile = authService.getOrCreateProfile();
         dtoToEntity(dto, profile);
         profile = profileRepository.save(profile);

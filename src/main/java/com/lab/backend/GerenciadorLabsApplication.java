@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GerenciadorLabsApplication implements CommandLineRunner {
+public class GerenciadorLabsApplication {
 
 	@Autowired
 	private AuthService authService;
@@ -16,8 +16,4 @@ public class GerenciadorLabsApplication implements CommandLineRunner {
 		SpringApplication.run(GerenciadorLabsApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(authService.getOrCreateProfile());
-	}
 }

@@ -1,5 +1,6 @@
 package com.lab.backend.model;
 
+import com.lab.backend.model.enums.ProfileType;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -23,6 +24,9 @@ public class Profile {
     private String linkLinkedin;
     @Column(name = "photo_url")
     private String photoUrl;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "profile_type")
+    private ProfileType profileType;
     @OneToMany(mappedBy = "profile")
     private List<Evento> eventos = new ArrayList<>();
     @OneToMany(mappedBy = "profile")
@@ -33,7 +37,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Long id, String nome, String sub, String bio, String linkLattes, String linkGithub, String linkLinkedin, String photoUrl) {
+    public Profile(Long id, String nome, String sub, String bio, String linkLattes, String linkGithub, String linkLinkedin, String photoUrl, ProfileType profileType) {
         this.id = id;
         this.nome = nome;
         this.sub = sub;
@@ -42,6 +46,7 @@ public class Profile {
         this.linkGithub = linkGithub;
         this.linkLinkedin = linkLinkedin;
         this.photoUrl = photoUrl;
+        this.profileType = profileType;
     }
 
     public Long getId() {
@@ -62,6 +67,10 @@ public class Profile {
 
     public String getSub() {
         return sub;
+    }
+
+    public void setSub(String sub) {
+        this.sub = sub;
     }
 
     public String getBio() {
@@ -102,6 +111,14 @@ public class Profile {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public ProfileType getProfileType() {
+        return profileType;
+    }
+
+    public void setProfileType(ProfileType profileType) {
+        this.profileType = profileType;
     }
 
     public List<Evento> getEventos() {

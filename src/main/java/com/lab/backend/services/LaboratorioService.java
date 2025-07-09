@@ -177,4 +177,18 @@ public class LaboratorioService {
         Page<ProfileMemberDto> members = profileLaboratorioRepository.getAllMembers(labId, nome, pageable);
         return members;
     }
+
+    public Page<ProfileMinDto> listCandidates(Long labId, String nome, Pageable pageable) {
+        Profile profile = authService.getOrCreateProfile();
+        boolean labAdmin = profileLaboratorioRepository.existsByIdLaboratorioIdAndIdProfileIdAndLabRoleIn(
+                labId,
+                profile.getId(),
+                List.of(LabRole.ADMIN, LabRole.OWNER));
+        boolean globalAdmin = authService.hasGlobalRole("ROLE_ADMIN");
+        if (!labAdmin && !globalAdmin) {
+            throw new ForbiddenException("Você não tem acesso!");
+        }
+        Page<Profile> list = profileLaboratorioRepository.findCandidatesForLab(labId, nome, pageable);
+        return list.map(ProfileMinDto::new);
+    }
 }

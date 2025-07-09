@@ -2,6 +2,7 @@ INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, 
 INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url, profile_type) VALUES ('test2', 'test2@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url', 'ALUNO')
 INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url, profile_type) VALUES ('test3', 'test3@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url', 'ALUNO')
 INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url, profile_type) VALUES ('test4', 'test4@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url', 'ALUNO')
+INSERT INTO tb_profile(nome, sub, bio, link_lattes, link_github, link_linkedin, photo_url, profile_type) VALUES ('test5', 'test5@gmail.com', 'apenas um test', 'link lattes', 'link git', 'link linkedin', 'foto url', 'ALUNO')
 
 INSERT INTO tb_laboratorio (nome, descricao_curta, descricao_longa, gradient_accent, logo_url) VALUES ('Telemidia', 'descricao curta', 'descricao longa', 'GREEN', 'logo do lab');
 

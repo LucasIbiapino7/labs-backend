@@ -54,5 +54,18 @@ public interface ProfileLaboratorioRepository extends JpaRepository<ProfileLabor
    """)
     Page<ProfileMemberDto> getAllMembers(Long labId, String nome, Pageable pageable);
 
+    @Query("""
+        select obj
+        from Profile obj
+        where upper(obj.nome) like upper(concat(:nome, '%'))
+          and not exists (
+              select 1
+              from ProfileLaboratorio pl
+              where pl.id.laboratorio.id = :labId
+                and pl.id.profile.id      = obj.id
+          )
+        order by obj.nome
+    """)
+    Page<Profile> findCandidatesForLab(Long labId, String nome, Pageable pageable);
 }
 

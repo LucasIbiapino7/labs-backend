@@ -82,5 +82,12 @@ public class LaboratorioController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping("/{labId}/candidates")
+    public ResponseEntity<Page<ProfileMinDto>> listCandidates(@PathVariable Long labId, @RequestParam(name = "nome", defaultValue = "") String nome, Pageable pageable){
+        Page<ProfileMinDto> response = laboratorioService.listCandidates(labId, nome, pageable);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

@@ -10,3 +10,7 @@ INSERT INTO tb_profile_laboratorio (profile_id, lab_id, ativo, lab_role, admin) 
 INSERT INTO tb_profile_laboratorio (profile_id, lab_id, ativo, lab_role, admin) VALUES (2, 1, true, 'ADMIN', true);
 INSERT INTO tb_profile_laboratorio (profile_id, lab_id, ativo, lab_role, admin) VALUES (3, 1, false, 'MEMBER', true);
 INSERT INTO tb_profile_laboratorio (profile_id, lab_id, ativo, lab_role, admin) VALUES (4, 1, true, 'MEMBER', true);
+
+INSERT INTO tb_post (titulo, conteudo, visibilidade, instante, lab_id, profile_id) VALUES ('test', 'meu primeiro post', 'PUBLICO', '2025-07-10T14:30:00', 1, 1)
+INSERT INTO tb_post (titulo, conteudo, visibilidade, instante, lab_id, profile_id) VALUES ('test', 'meu segundo post', 'PRIVADO', '2025-07-10T14:31:00', 1, 1)
+INSERT INTO tb_post (titulo, conteudo, visibilidade, instante, lab_id, profile_id) VALUES ('test', 'meu terceiro post', 'PUBLICO', '2025-07-10T14:32:00', 1, 1)

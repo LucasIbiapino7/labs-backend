@@ -89,5 +89,6 @@ public class LaboratorioController {
         return ResponseEntity.ok(response);
     }
 
+    // precisa de um endpoint de tornar inativo
 
 }

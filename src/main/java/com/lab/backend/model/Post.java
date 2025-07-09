@@ -15,7 +15,7 @@ public class Post {
     private String titulo;
     @Column(columnDefinition = "TEXT")
     private String conteudo;
-    private LocalDateTime intante;
+    private LocalDateTime instante;
     @Enumerated(EnumType.STRING)
     private Visibilidade visibilidade;
     @ManyToOne
@@ -32,7 +32,7 @@ public class Post {
         this.id = id;
         this.titulo = titulo;
         this.conteudo = conteudo;
-        this.intante = intante;
+        this.instante = intante;
         this.visibilidade = visibilidade;
         this.laboratorio = laboratorio;
         this.profile = profile;
@@ -62,12 +62,12 @@ public class Post {
         this.conteudo = conteudo;
     }
 
-    public LocalDateTime getIntante() {
-        return intante;
+    public LocalDateTime getInstante() {
+        return instante;
     }
 
-    public void setIntante(LocalDateTime intante) {
-        this.intante = intante;
+    public void setInstante(LocalDateTime instante) {
+        this.instante = instante;
     }
 
     public Visibilidade getVisibilidade() {

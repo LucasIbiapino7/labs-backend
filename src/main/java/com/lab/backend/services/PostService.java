@@ -10,9 +10,11 @@ import com.lab.backend.model.enums.Visibilidade;
 import com.lab.backend.repositories.LaboratorioRepository;
 import com.lab.backend.repositories.PostRepository;
 import com.lab.backend.repositories.ProfileLaboratorioRepository;
+import com.lab.backend.services.exceptions.DatabaseException;
 import com.lab.backend.services.exceptions.ForbiddenException;
 import com.lab.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -103,5 +105,22 @@ public class PostService {
             visibilidades = List.of(Visibilidade.PRIVADO);
         }
         return postRepository.findByLabAndVisibilidade(labId, visibilidades, pageable);
+    }
+
+    @Transactional
+    public void delete(Long postId, Long labId) {
+        Profile profile = authService.getOrCreateProfile();
+        boolean labMember = profileLaboratorioRepository.existsByIdLaboratorioIdAndIdProfileIdAndLabRoleIn(
+                labId,
+                profile.getId(),
+                List.of(LabRole.ADMIN, LabRole.OWNER, LabRole.MEMBER));
+        if (!postRepository.existsById(postId)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try {
+            postRepository.deleteById(postId);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Falha de integridade referencial");
+        }
     }
 }

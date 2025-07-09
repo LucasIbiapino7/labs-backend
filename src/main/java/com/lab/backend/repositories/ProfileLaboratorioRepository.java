@@ -1,8 +1,12 @@
 package com.lab.backend.repositories;
 
+import com.lab.backend.dtos.profile.ProfileMemberDto;
+import com.lab.backend.model.Profile;
 import com.lab.backend.model.ProfileLaboratorio;
 import com.lab.backend.model.ProfileLaboratorioPK;
 import com.lab.backend.model.enums.LabRole;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,9 +24,35 @@ public interface ProfileLaboratorioRepository extends JpaRepository<ProfileLabor
        select obj.labRole
        from ProfileLaboratorio obj
        where obj.id.laboratorio.id = :labId
-         and obj.id.profile.id     = :profileId
+         and obj.id.profile.id = :profileId
    """)
     Optional<LabRole> findRole(Long labId, Long profileId);
+
+    @Query("""
+       select new com.lab.backend.dtos.profile.ProfileMemberDto(
+          p.id,
+          p.nome,
+          p.bio,
+          p.linkLattes,
+          p.linkGithub,
+          p.linkLinkedin,
+          p.photoUrl,
+          p.profileType,
+          obj.ativo
+       )
+       from ProfileLaboratorio obj
+       join obj.id.profile p
+       where obj.id.laboratorio.id = :labId
+         and upper(p.nome) like upper(concat(:nome, '%'))
+       order by
+         obj.ativo desc,
+         case p.profileType
+           when com.lab.backend.model.enums.ProfileType.PROFESSOR then 0
+           else 1
+         end,
+         p.nome
+   """)
+    Page<ProfileMemberDto> getAllMembers(Long labId, String nome, Pageable pageable);
 
 }
 

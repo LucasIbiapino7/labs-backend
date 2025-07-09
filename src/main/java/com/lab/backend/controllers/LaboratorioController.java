@@ -1,10 +1,14 @@
 package com.lab.backend.controllers;
 
 import com.lab.backend.dtos.lab.*;
+import com.lab.backend.dtos.profile.ProfileMemberDto;
+import com.lab.backend.dtos.profile.ProfileMinDto;
 import com.lab.backend.model.Laboratorio;
 import com.lab.backend.services.LaboratorioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +68,12 @@ public class LaboratorioController {
     public ResponseEntity<Void> addMember(@RequestBody @Valid LabAddMemberDto dto, @PathVariable Long labId){
         laboratorioService.addMember(dto, labId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{labId}/members")
+    public ResponseEntity<Page<ProfileMemberDto>> getAllMembers(@PathVariable Long labId, @RequestParam(name = "nome", defaultValue = "") String nome, Pageable pageable){
+        Page<ProfileMemberDto> response = laboratorioService.getAllMembers(labId, nome, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}/summary")

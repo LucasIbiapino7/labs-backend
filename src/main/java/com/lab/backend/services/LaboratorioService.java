@@ -1,6 +1,8 @@
 package com.lab.backend.services;
 
 import com.lab.backend.dtos.lab.*;
+import com.lab.backend.dtos.profile.ProfileMemberDto;
+import com.lab.backend.dtos.profile.ProfileMinDto;
 import com.lab.backend.model.Laboratorio;
 import com.lab.backend.model.Profile;
 import com.lab.backend.model.ProfileLaboratorio;
@@ -15,6 +17,8 @@ import com.lab.backend.services.exceptions.ForbiddenException;
 import com.lab.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,5 +168,13 @@ public class LaboratorioService {
         return new LabSummaryDto(laboratorio.getId(), laboratorio.getNome(),
                 laboratorio.getGradientAccent().name(), laboratorio.getLogoUrl(), isMember, isAdmin, isOwner);
 
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProfileMemberDto> getAllMembers(Long labId, String nome, Pageable pageable) {
+        Laboratorio laboratorio = laboratorioRepository.findById(labId).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado!"));
+        Page<ProfileMemberDto> members = profileLaboratorioRepository.getAllMembers(labId, nome, pageable);
+        return members;
     }
 }

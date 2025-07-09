@@ -85,4 +85,23 @@ public class PostService {
                 () -> new ResourceNotFoundException("Recurso não encontrado!"));
         return postRepository.findByLabAndVisibilidade(labId, List.of(Visibilidade.PUBLICO), pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Page<PostDto> getFeedLabInterno(Long labId, Pageable pageable, List<Visibilidade> visibilidades) {
+        Laboratorio laboratorio = laboratorioRepository.findById(labId).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado!"));
+        Profile profile = authService.getOrCreateProfile();
+        boolean labMember = profileLaboratorioRepository.existsByIdLaboratorioIdAndIdProfileIdAndLabRoleIn(
+                labId,
+                profile.getId(),
+                List.of(LabRole.ADMIN, LabRole.OWNER, LabRole.MEMBER));
+        boolean admin = authService.hasGlobalRole("ROLE_ADMIN");
+        if (!labMember && !admin){
+            throw new ForbiddenException("Você não tem acesso!");
+        }
+        if (visibilidades == null || visibilidades.isEmpty()){
+            visibilidades = List.of(Visibilidade.PRIVADO);
+        }
+        return postRepository.findByLabAndVisibilidade(labId, visibilidades, pageable);
+    }
 }

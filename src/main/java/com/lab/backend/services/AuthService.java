@@ -45,6 +45,15 @@ public class AuthService {
         return profile;
     }
 
+    public Long currentProfileIdOrNull() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof Jwt jwt)) {
+            return null;
+        }
+        return profileRepository.findIdBySub(jwt.getSubject())
+                .orElse(null);
+    }
+
     // 	recupera todas as roles globais do usuário como Set<String
     public Set<String> currentAuthorities() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

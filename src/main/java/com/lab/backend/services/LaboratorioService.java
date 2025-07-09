@@ -1,9 +1,6 @@
 package com.lab.backend.services;
 
-import com.lab.backend.dtos.lab.LabAddMemberDto;
-import com.lab.backend.dtos.lab.LaboratorioCreateDto;
-import com.lab.backend.dtos.lab.LaboratorioInfosDto;
-import com.lab.backend.dtos.lab.LaboratorioUpdateDto;
+import com.lab.backend.dtos.lab.*;
 import com.lab.backend.model.Laboratorio;
 import com.lab.backend.model.Profile;
 import com.lab.backend.model.ProfileLaboratorio;
@@ -143,5 +140,29 @@ public class LaboratorioService {
         relacionamento.setLabRole(labRole);
         relacionamento.setAdmin(labRole.equals(LabRole.ADMIN));
         profileLaboratorioRepository.save(relacionamento);
+    }
+
+    @Transactional(readOnly = true)
+    public LabSummaryDto summary(Long labId) {
+        Laboratorio laboratorio = laboratorioRepository.findById(labId).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado!"));
+
+        Long profileId = authService.currentProfileIdOrNull(); // Null se for visitante (sem token)
+
+        boolean isMember = false;
+        boolean isAdmin = false;
+        boolean isOwner = false;
+
+        if (profileId != null){
+            LabRole role = profileLaboratorioRepository.findRole(labId, profileId)
+                    .orElse(null);
+            isMember = role != null;
+            isAdmin = role == LabRole.ADMIN || role == LabRole.OWNER;
+            isOwner = role == LabRole.OWNER;;
+        }
+
+        return new LabSummaryDto(laboratorio.getId(), laboratorio.getNome(),
+                laboratorio.getGradientAccent().name(), laboratorio.getLogoUrl(), isMember, isAdmin, isOwner);
+
     }
 }

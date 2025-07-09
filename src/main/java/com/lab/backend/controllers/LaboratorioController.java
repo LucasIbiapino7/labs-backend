@@ -1,9 +1,6 @@
 package com.lab.backend.controllers;
 
-import com.lab.backend.dtos.lab.LabAddMemberDto;
-import com.lab.backend.dtos.lab.LaboratorioCreateDto;
-import com.lab.backend.dtos.lab.LaboratorioInfosDto;
-import com.lab.backend.dtos.lab.LaboratorioUpdateDto;
+import com.lab.backend.dtos.lab.*;
 import com.lab.backend.model.Laboratorio;
 import com.lab.backend.services.LaboratorioService;
 import jakarta.validation.Valid;
@@ -67,6 +64,12 @@ public class LaboratorioController {
     public ResponseEntity<Void> addMember(@RequestBody @Valid LabAddMemberDto dto, @PathVariable Long labId){
         laboratorioService.addMember(dto, labId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/summary")
+    public ResponseEntity<LabSummaryDto> summary(@PathVariable Long id){
+        LabSummaryDto response = laboratorioService.summary(id);
+        return ResponseEntity.ok(response);
     }
 
 

@@ -16,4 +16,10 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     Page<Profile> findByName(@Param("nome") String nome, Long currentUserId, Pageable pageable);
 
     Optional<Profile> findBySub(@Param("sub") String sub);
+    @Query("""
+        select obj.id
+        from Profile obj
+        where obj.sub = :sub
+    """)
+    Optional<Long> findIdBySub(String sub);
 }

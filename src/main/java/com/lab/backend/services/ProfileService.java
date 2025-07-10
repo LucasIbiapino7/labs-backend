@@ -45,6 +45,7 @@ public class ProfileService {
         profile.setLinkLattes(((dto.getLinkLattes()) != null) ? dto.getLinkLattes() : "");
         profile.setLinkLinkedin(((dto.getLinkGithub()) != null) ? dto.getLinkGithub() : "");
         profile.setLinkLinkedin(((dto.getLinkLinkedin()) != null) ? dto.getLinkLinkedin() : "");
+        profile.setIdLattes(((dto.getIdLattes()) != null) ? dto.getIdLattes() : "");
     }
 
     public Page<ProfileMinDto> findByName(String nome, Pageable pageable) {

@@ -10,6 +10,7 @@ public class ProfileUpdateDto {
     @NotBlank(message = "campo requerido!")
     @Size(min = 5, message = "Sua bio precisa ter no mínimo 5 caracteres!")
     private String bio;
+    private String idLattes;
     private String linkLattes;
     private String linkGithub;
     private String linkLinkedin;
@@ -55,5 +56,13 @@ public class ProfileUpdateDto {
 
     public void setLinkLinkedin(String linkLinkedin) {
         this.linkLinkedin = linkLinkedin;
+    }
+
+    public String getIdLattes() {
+        return idLattes;
+    }
+
+    public void setIdLattes(String idLattes) {
+        this.idLattes = idLattes;
     }
 }

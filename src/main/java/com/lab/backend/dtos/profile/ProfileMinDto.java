@@ -10,6 +10,7 @@ public class ProfileMinDto {
     private String linkLattes;
     private String linkGithub;
     private String linkLinkedin;
+    private String idLattes;
     private String photoUrl;
     private ProfileType profileType;
 
@@ -23,6 +24,7 @@ public class ProfileMinDto {
         linkLattes = entity.getLinkLattes();
         linkGithub = entity.getLinkGithub();
         linkLinkedin = entity.getLinkLinkedin();
+        idLattes = entity.getIdLattes();
         photoUrl = entity.getPhotoUrl();
         profileType = entity.getProfileType();
     }
@@ -73,6 +75,14 @@ public class ProfileMinDto {
 
     public void setLinkLinkedin(String linkLinkedin) {
         this.linkLinkedin = linkLinkedin;
+    }
+
+    public String getIdLattes() {
+        return idLattes;
+    }
+
+    public void setIdLattes(String idLattes) {
+        this.idLattes = idLattes;
     }
 
     public String getPhotoUrl() {

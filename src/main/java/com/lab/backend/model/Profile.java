@@ -22,6 +22,8 @@ public class Profile {
     private String linkGithub;
     @Column(name = "link_linkedin")
     private String linkLinkedin;
+    @Column(name = "id_lattes")
+    private String idLattes;
     @Column(name = "photo_url")
     private String photoUrl;
     @Enumerated(EnumType.STRING)
@@ -37,7 +39,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Long id, String nome, String sub, String bio, String linkLattes, String linkGithub, String linkLinkedin, String photoUrl, ProfileType profileType) {
+    public Profile(Long id, String nome, String sub, String bio, String linkLattes, String linkGithub, String linkLinkedin, String idLattes, String photoUrl, ProfileType profileType) {
         this.id = id;
         this.nome = nome;
         this.sub = sub;
@@ -45,6 +47,7 @@ public class Profile {
         this.linkLattes = linkLattes;
         this.linkGithub = linkGithub;
         this.linkLinkedin = linkLinkedin;
+        this.idLattes = idLattes;
         this.photoUrl = photoUrl;
         this.profileType = profileType;
     }
@@ -103,6 +106,26 @@ public class Profile {
 
     public void setLinkLinkedin(String linkLinkedin) {
         this.linkLinkedin = linkLinkedin;
+    }
+
+    public String getIdLattes() {
+        return idLattes;
+    }
+
+    public void setIdLattes(String idLattes) {
+        this.idLattes = idLattes;
+    }
+
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setProfileLaboratorios(Set<ProfileLaboratorio> profileLaboratorios) {
+        this.profileLaboratorios = profileLaboratorios;
     }
 
     public String getPhotoUrl() {

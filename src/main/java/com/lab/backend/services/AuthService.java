@@ -37,6 +37,7 @@ public class AuthService {
             newProfile.setLinkLattes("");
             newProfile.setLinkGithub("");
             newProfile.setLinkLinkedin("");
+            newProfile.setIdLattes("");
             newProfile.setPhotoUrl(null);
             newProfile.setProfileType(ProfileType.ALUNO);
             return profileRepository.save(newProfile);

@@ -110,10 +110,13 @@ public class PostService {
     @Transactional
     public void delete(Long postId, Long labId) {
         Profile profile = authService.getOrCreateProfile();
-        boolean labMember = profileLaboratorioRepository.existsByIdLaboratorioIdAndIdProfileIdAndLabRoleIn(
+        boolean labAdmin = profileLaboratorioRepository.existsByIdLaboratorioIdAndIdProfileIdAndLabRoleIn(
                 labId,
                 profile.getId(),
-                List.of(LabRole.ADMIN, LabRole.OWNER, LabRole.MEMBER));
+                List.of(LabRole.ADMIN, LabRole.OWNER));
+        if (!labAdmin){
+            throw new ForbiddenException("Você não tem acesso!");
+        }
         if (!postRepository.existsById(postId)){
             throw new ResourceNotFoundException("Recurso não encontrado");
         }

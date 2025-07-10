@@ -14,6 +14,8 @@ public class Evento {
     private String titulo;
     @Column(columnDefinition = "TEXT")
     private String descricao;
+    @Column(name = "data_evento")
+    private LocalDateTime dataEvento;
     private LocalDateTime instante;
     private String local;
     @ManyToOne
@@ -26,7 +28,7 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(Long id, String titulo, String descricao, LocalDateTime instante, String local, Laboratorio laboratorio, Profile profile) {
+    public Evento(Long id, String titulo, String descricao, LocalDateTime date, LocalDateTime instante, String local, Laboratorio laboratorio, Profile profile) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -34,6 +36,7 @@ public class Evento {
         this.local = local;
         this.laboratorio = laboratorio;
         this.profile = profile;
+        this.dataEvento = date;
     }
 
     public Long getId() {
@@ -58,6 +61,14 @@ public class Evento {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public LocalDateTime getDataEvento() {
+        return dataEvento;
+    }
+
+    public void setDataEvento(LocalDateTime dataEvento) {
+        this.dataEvento = dataEvento;
     }
 
     public LocalDateTime getInstante() {

@@ -39,6 +39,8 @@ public class ResourceServerConfig {
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/summary").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/members").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/evento/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/evento/*/next").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth ->
                         oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter())));

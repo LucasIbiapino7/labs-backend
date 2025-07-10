@@ -191,4 +191,8 @@ public class LaboratorioService {
         Page<Profile> list = profileLaboratorioRepository.findCandidatesForLab(labId, nome, pageable);
         return list.map(ProfileMinDto::new);
     }
+
+    public Page<LabCardDto> list(Pageable pageable) {
+        return laboratorioRepository.findAllPublic(pageable);
+    }
 }

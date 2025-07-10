@@ -23,6 +23,12 @@ public class LaboratorioController {
     @Autowired
     private LaboratorioService laboratorioService;
 
+    @GetMapping
+    public ResponseEntity<Page<LabCardDto>> list(Pageable pageable){
+        Page<LabCardDto> response = laboratorioService.list(pageable);
+        return ResponseEntity.ok(response);
+    }
+
     // PROTEGIDO
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")

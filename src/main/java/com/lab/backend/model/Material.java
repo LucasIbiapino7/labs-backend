@@ -13,7 +13,7 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
-    private String material;
+    private String descricao;
     private String link;
     @Enumerated(EnumType.STRING)
     private MaterialType tipo;
@@ -26,10 +26,10 @@ public class Material {
     public Material() {
     }
 
-    public Material(Long id, String titulo, String material, String link, MaterialType tipo, Visibilidade visibilidade, Laboratorio laboratorio) {
+    public Material(Long id, String titulo, String descricao, String link, MaterialType tipo, Visibilidade visibilidade, Laboratorio laboratorio) {
         this.id = id;
         this.titulo = titulo;
-        this.material = material;
+        this.descricao = descricao;
         this.link = link;
         this.tipo = tipo;
         this.visibilidade = visibilidade;
@@ -52,12 +52,12 @@ public class Material {
         this.titulo = titulo;
     }
 
-    public String getMaterial() {
-        return material;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getLink() {

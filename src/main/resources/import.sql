@@ -20,3 +20,8 @@ INSERT INTO tb_evento (titulo, descricao, local, instante, data_evento, profile_
 INSERT INTO tb_evento (titulo, descricao, local, instante, data_evento, profile_id, lab_id) VALUES ('evento', 'meu segundo evento', 'ufma', '2025-07-10T14:30:00', '2025-09-10T14:30:00', 1, 1)
 INSERT INTO tb_evento (titulo, descricao, local, instante, data_evento, profile_id, lab_id) VALUES ('evento', 'meu terceiro evento', 'ufma', '2025-07-10T14:30:00', '2024-09-10T14:30:00', 1, 1)
 INSERT INTO tb_evento (titulo, descricao, local, instante, data_evento, profile_id, lab_id) VALUES ('evento', 'meu quarto evento', 'ufma', '2025-07-10T14:30:00', '2025-09-10T14:30:00', 1, 2)
+
+INSERT INTO tb_material (titulo, descricao, link, visibilidade, tipo, lab_id) VALUES ('material 1', 'descricao', 'link', 'PUBLICO', 'PDF', 1)
+INSERT INTO tb_material (titulo, descricao, link, visibilidade, tipo, lab_id) VALUES ('material 2', 'descricao', 'link', 'PUBLICO', 'PDF', 2)
+INSERT INTO tb_material (titulo, descricao, link, visibilidade, tipo, lab_id) VALUES ('material 3', 'descricao', 'link', 'PUBLICO', 'SLIDE', 1)
+INSERT INTO tb_material (titulo, descricao, link, visibilidade, tipo, lab_id) VALUES ('material 4', 'descricao', 'link', 'PRIVADO', 'SLIDE', 1)

@@ -9,6 +9,11 @@ public class LabMinDto {
     public LabMinDto() {
     }
 
+    public LabMinDto(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public LabMinDto(Laboratorio entity) {
         id = entity.getId();
         nome = entity.getNome();

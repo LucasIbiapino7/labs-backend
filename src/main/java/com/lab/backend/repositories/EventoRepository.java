@@ -31,4 +31,12 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
         order by obj.dataEvento asc
     """)
     List<Evento> getNextEvents(@Param("labId") Long labId);
+
+    @Query("""
+           select obj
+           from Evento obj
+           where obj.dataEvento >= CURRENT_TIMESTAMP
+           order by obj.dataEvento asc
+       """)
+    List<Evento> findNextEvents(Pageable limit15);
 }

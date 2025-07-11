@@ -35,6 +35,7 @@ public class ResourceServerConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**", "/r/**", "/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/feed").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/profile/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/summary").permitAll()

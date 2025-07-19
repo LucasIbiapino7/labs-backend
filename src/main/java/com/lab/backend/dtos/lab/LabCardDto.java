@@ -5,7 +5,7 @@ import com.lab.backend.model.Laboratorio;
 import com.lab.backend.model.Profile;
 
 public class LabCardDto {
-    private Long   id;
+    private Long id;
     private String nome;
     private String descricaoCurta;
     private String logoUrl;

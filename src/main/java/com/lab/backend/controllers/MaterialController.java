@@ -5,6 +5,7 @@ import com.lab.backend.dtos.materiais.MaterialDto;
 import com.lab.backend.dtos.materiais.UpdateMaterialDto;
 import com.lab.backend.model.enums.MaterialType;
 import com.lab.backend.services.MaterialService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +41,7 @@ public class MaterialController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/{labId}")
-    public ResponseEntity<MaterialDto> insert(@PathVariable Long labId, @RequestBody InsertMaterialDto dto){
+    public ResponseEntity<MaterialDto> insert(@PathVariable Long labId, @RequestBody @Valid InsertMaterialDto dto){
         MaterialDto response = materialService.insert(labId, dto);
         return ResponseEntity.ok(response);
     }

@@ -43,7 +43,7 @@ public class PostController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{labId}/interno")
-    public ResponseEntity<Page<PostDto>> getFeedLabInterno(@PathVariable Long labId, Pageable pageable, @RequestParam(name = "visibilidade")List<Visibilidade> visibilidades){
+    public ResponseEntity<Page<PostDto>> getFeedLabInterno(@PathVariable Long labId, Pageable pageable, @RequestParam(name = "visibilidade", required = false)List<Visibilidade> visibilidades){
         Page<PostDto> response = postService.getFeedLabInterno(labId, pageable, visibilidades);
         return ResponseEntity.ok(response);
     }

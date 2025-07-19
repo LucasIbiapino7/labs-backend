@@ -1,8 +1,10 @@
-package com.lab.backend.repositories;
+package com.lab.backend.services;
 
 import com.lab.backend.dtos.feed.FeedItemDto;
 import com.lab.backend.model.Evento;
 import com.lab.backend.model.Post;
+import com.lab.backend.repositories.EventoRepository;
+import com.lab.backend.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

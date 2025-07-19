@@ -8,12 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 public class InsertMaterialDto {
     @NotBlank(message = "campo requerido")
     private String titulo;
+    @NotBlank(message = "campo requerido")
     private String descricao;
     @NotBlank(message = "campo requerido")
     private String link;
-    @NotBlank(message = "campo requerido")
     private MaterialType tipo;
-    @NotBlank(message = "campo requerido")
     private Visibilidade visibilidade;
 
     public InsertMaterialDto() {

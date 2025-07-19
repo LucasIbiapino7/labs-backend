@@ -1,6 +1,9 @@
 package com.lab.backend.controllers;
 
 import com.lab.backend.dtos.lab.*;
+import com.lab.backend.dtos.lattes.PesquisaDto;
+import com.lab.backend.dtos.lattes.PesquisaTipo;
+import com.lab.backend.dtos.profile.LabMemberAdminDto;
 import com.lab.backend.dtos.profile.ProfileMemberDto;
 import com.lab.backend.dtos.profile.ProfileMinDto;
 import com.lab.backend.model.Laboratorio;
@@ -26,6 +29,12 @@ public class LaboratorioController {
     @GetMapping
     public ResponseEntity<Page<LabCardDto>> list(Pageable pageable){
         Page<LabCardDto> response = laboratorioService.list(pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{labId}/pesquisas")
+    public ResponseEntity<Page<PesquisaDto>> listPesquisas(@PathVariable Long labId, @RequestParam PesquisaTipo tipo, Pageable pageable){
+        Page<PesquisaDto> response = laboratorioService.findByLabAndTipo(labId, tipo, pageable);
         return ResponseEntity.ok(response);
     }
 
@@ -95,6 +104,25 @@ public class LaboratorioController {
         return ResponseEntity.ok(response);
     }
 
-    // precisa de um endpoint de tornar inativo
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping("/{labId}/members/admin")
+    public ResponseEntity<Page<LabMemberAdminDto>> allMembersAdmin(@PathVariable Long labId, @RequestParam(name = "nome", defaultValue = "") String nome, Pageable pageable){
+        Page<LabMemberAdminDto> response = laboratorioService.allMembersAdmin(labId, nome, pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PatchMapping("/{labId}/members/{profileId}/deactivate")
+    public ResponseEntity<Void> deactivate(@PathVariable Long labId, @PathVariable Long profileId) {
+        laboratorioService.deactivateMember(labId, profileId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PatchMapping("/{labId}/members/{profileId}/reactivate")
+    public ResponseEntity<Void> reactivate(@PathVariable Long labId, @PathVariable Long profileId) {
+        laboratorioService.reactivateMember(labId, profileId);
+        return ResponseEntity.ok().build();
+    }
 
 }

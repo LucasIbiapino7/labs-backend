@@ -1,16 +1,17 @@
-package com.lab.backend.dtos.lab;
+package com.lab.backend.dtos.admin;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class LaboratorioCreateDto {
-    @NotBlank(message = "Campo Requerido")
-    @Size(min = 3, max = 30, message = "O campo deve conter entre 3 e 30 caracteres!")
+public class AdminLabCreateDto {
+    @NotBlank
+    @Size(min = 3, max = 120)
     private String nome;
-    @Size(max = 255, message = "Máximo 255 caracteres")
+    @Size(max = 255)
     private String descricaoCurta;
+    private Long ownerId;
 
-    public LaboratorioCreateDto() {
+    public AdminLabCreateDto() {
     }
 
     public String getNome() {
@@ -27,5 +28,13 @@ public class LaboratorioCreateDto {
 
     public void setDescricaoCurta(String descricaoCurta) {
         this.descricaoCurta = descricaoCurta;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }

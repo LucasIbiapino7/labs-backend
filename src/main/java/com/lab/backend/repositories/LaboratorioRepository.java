@@ -18,4 +18,27 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
        order by lab.nome
 """)
     Page<LabCardDto> findAllPublic(Pageable pageable);
+
+    @Query("""
+       select l from Laboratorio l
+       where (:search is null or trim(:search) = '' 
+              or upper(l.nome) like upper(concat('%', :search, '%')))
+       order by l.nome
+    """)
+    Page<Laboratorio> searchAll(String search, Pageable pageable);
+
+    @Query("""
+       select count(pl)
+       from ProfileLaboratorio pl
+       where pl.id.laboratorio.id = :labId
+    """)
+    long countMembers(Long labId);
+
+    @Query("""
+       select pl.id.profile.id
+       from ProfileLaboratorio pl
+       where pl.id.laboratorio.id = :labId
+         and pl.labRole = com.lab.backend.model.enums.LabRole.OWNER
+    """)
+    Long findOwnerId(Long labId);
 }

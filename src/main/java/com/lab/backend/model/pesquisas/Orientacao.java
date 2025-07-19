@@ -12,12 +12,12 @@ public class Orientacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile author;
-    @Enumerated(EnumType.STRING)
-    private OrientacaoNivel nivel;
+    //@Enumerated(EnumType.STRING)
+    private String nivel;
     @Column(nullable = false)
     private String titulo;
     private Integer ano;
@@ -29,11 +29,11 @@ public class Orientacao {
     public Orientacao() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,11 +45,11 @@ public class Orientacao {
         this.author = author;
     }
 
-    public OrientacaoNivel getNivel() {
+    public String getNivel() {
         return nivel;
     }
 
-    public void setNivel(OrientacaoNivel nivel) {
+    public void setNivel(String nivel) {
         this.nivel = nivel;
     }
 

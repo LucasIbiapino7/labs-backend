@@ -1,5 +1,6 @@
 package com.lab.backend.repositories;
 
+import com.lab.backend.dtos.profile.LabMemberAdminDto;
 import com.lab.backend.dtos.profile.ProfileMemberDto;
 import com.lab.backend.model.Profile;
 import com.lab.backend.model.ProfileLaboratorio;
@@ -62,10 +63,58 @@ public interface ProfileLaboratorioRepository extends JpaRepository<ProfileLabor
               select 1
               from ProfileLaboratorio pl
               where pl.id.laboratorio.id = :labId
-                and pl.id.profile.id      = obj.id
+                and pl.id.profile.id = obj.id
           )
         order by obj.nome
     """)
     Page<Profile> findCandidatesForLab(Long labId, String nome, Pageable pageable);
+
+    @Query("""
+    select new com.lab.backend.dtos.profile.LabMemberAdminDto(
+        p.id,
+        p.nome,
+        p.bio,
+        p.linkLattes,
+        p.linkGithub,
+        p.linkLinkedin,
+        p.photoUrl,
+        p.profileType,
+        pl.labRole,
+        pl.ativo
+    )
+    from ProfileLaboratorio pl
+      join pl.id.profile p
+    where pl.id.laboratorio.id = :labId
+      and upper(p.nome) like upper(concat(:nome, '%'))
+    order by
+      pl.ativo desc,
+      case pl.labRole
+         when com.lab.backend.model.enums.LabRole.OWNER then 0
+         when com.lab.backend.model.enums.LabRole.ADMIN then 1
+         else 2
+      end,
+      case p.profileType
+         when com.lab.backend.model.enums.ProfileType.PROFESSOR then 0
+         else 1
+      end,
+      p.nome
+""")
+    Page<LabMemberAdminDto> findAdminViewMembers(Long labId, String nome, Pageable pageable);
+
+    @Query("""
+   select count(pl)
+   from ProfileLaboratorio pl
+   where pl.id.laboratorio.id = :labId
+     and pl.labRole = com.lab.backend.model.enums.LabRole.ADMIN
+     and pl.ativo = true
+""")
+    long countActiveAdmins(Long labId);
+    @Query("""
+    select pl
+    from ProfileLaboratorio pl
+    where pl.id.laboratorio.id = :labId
+      and pl.labRole = com.lab.backend.model.enums.LabRole.OWNER
+""")
+    List<ProfileLaboratorio> findOwners(Long labId);
 }
 

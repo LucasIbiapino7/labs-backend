@@ -1,5 +1,6 @@
 package com.lab.backend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +13,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class ResourceServerConfig {
+
+    @Value("${cors.config.allowed-origin}")
+    private String corsOrigin;
 
     @Bean
     JwtAuthenticationConverter jwtAuthConverter() {
@@ -39,14 +48,17 @@ public class ResourceServerConfig {
                         .requestMatchers(HttpMethod.GET, "/api/profile/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/summary").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/pesquisas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/laboratorio/*/members").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/evento/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/evento/*/next").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/material/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/files/download/*").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth ->
-                        oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter())));
+                        oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter())))
+                .cors((cors) -> cors.configurationSource(corsConfigurationSource()));
         return http.build();
     }
 
@@ -58,7 +70,21 @@ public class ResourceServerConfig {
                 .securityMatcher(PathRequest.toH2Console())
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions().disable())
+                .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(a -> a.anyRequest().permitAll());
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(corsOrigin));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+        config.setExposedHeaders(List.of("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

@@ -11,13 +11,13 @@ import java.util.Objects;
 public class Publicacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile author;
-    @Enumerated(EnumType.STRING)
-    @Column(length = 1, nullable = false)
-    private PublicationType tipo;
+//    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private String tipo;
     @Column(nullable = false)
     private String titulo;
     private Integer ano;
@@ -30,11 +30,11 @@ public class Publicacao {
     public Publicacao() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,11 +46,11 @@ public class Publicacao {
         this.author = author;
     }
 
-    public PublicationType getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(PublicationType tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 

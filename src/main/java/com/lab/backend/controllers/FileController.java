@@ -36,6 +36,12 @@ public class FileController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/upload/{labId}")
+    public ResponseEntity<FileUploadDto> uploadLab(@RequestParam("file") MultipartFile file, @PathVariable Long labId){
+        FileUploadDto response = fileService.uploadLab(file, fileStorageLocation, labId);
+        return ResponseEntity.ok(response);
+    }
+
     // PUBLICA
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName,

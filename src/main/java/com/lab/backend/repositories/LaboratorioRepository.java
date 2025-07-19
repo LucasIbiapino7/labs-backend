@@ -20,10 +20,12 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
     Page<LabCardDto> findAllPublic(Pageable pageable);
 
     @Query("""
-       select l from Laboratorio l
-       where (:search is null or trim(:search) = '' 
-              or upper(l.nome) like upper(concat('%', :search, '%')))
-       order by l.nome
+       select l
+         from Laboratorio l
+        where (:search is null
+               or :search = ''
+               or upper(l.nome) like upper(concat('%', :search, '%')))
+        order by l.nome
     """)
     Page<Laboratorio> searchAll(String search, Pageable pageable);
 

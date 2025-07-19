@@ -42,9 +42,11 @@ public class LattesService {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(LattesService.class);
 
     // @Scheduled(cron = "0 0 3 */7 * ?")
-    @Scheduled(initialDelayString = "PT0S",
-            fixedRateString    = "PT5M",
-            zone = "America/Fortaleza")
+    @Scheduled(
+            initialDelayString = "PT5M", // 5 minutos após o start
+            fixedRateString = "PT24H",// depois, repete a cada 24 horas
+            zone = "America/Fortaleza"
+    )
     public void run(){
         log.info("Iniciando sincronização de publicações Lattes…");
 
